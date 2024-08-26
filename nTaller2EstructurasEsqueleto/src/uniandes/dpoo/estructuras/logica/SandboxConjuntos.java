@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 /**
  * Esta clase tiene un conjunto de métodos para practicar operaciones sobre conjuntos implementados usando un árbol (TreeSet).
  *
@@ -39,7 +40,18 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoLista( )
     {
-        return null;
+    	ArrayList<String> listaCadenas = new ArrayList<String>();
+
+    	Iterator<String> arbolCadenasIterator = this.arbolCadenas.iterator();
+
+    	while ( arbolCadenasIterator.hasNext() ) {
+
+    		String next = arbolCadenasIterator.next();
+
+    		listaCadenas.add(next);
+
+    	}
+    	return listaCadenas;
     }
 
     /**
@@ -48,7 +60,19 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoListaInvertida( )
     {
-        return null;
+    	ArrayList<String> listaCadenas = new ArrayList<String>();
+
+    	Iterator<String> arbolCadenasIterator = this.arbolCadenas.descendingIterator();
+
+    	while ( arbolCadenasIterator.hasNext() ) {
+
+    		String next = arbolCadenasIterator.next();
+
+    		listaCadenas.add(next);
+
+    	}
+
+        return listaCadenas;
     }
 
     /**
@@ -59,7 +83,13 @@ public class SandboxConjuntos
      */
     public String getPrimera( )
     {
-        return null;
+        if ( this.arbolCadenas.isEmpty() )  {
+
+        	return null;
+
+        }
+
+        return this.arbolCadenas.first();
     }
 
     /**
@@ -70,7 +100,13 @@ public class SandboxConjuntos
      */
     public String getUltima( )
     {
-        return null;
+        if ( this.arbolCadenas.isEmpty() )  {
+
+        	return null;
+
+        }
+
+        return this.arbolCadenas.last();
     }
 
     /**
@@ -80,7 +116,9 @@ public class SandboxConjuntos
      */
     public Collection<String> getSiguientes( String cadena )
     {
-        return null;
+    	NavigableSet<String> siguientes = this.arbolCadenas.tailSet(cadena, true);
+
+    	return siguientes;
     }
 
     /**
@@ -89,7 +127,7 @@ public class SandboxConjuntos
      */
     public int getCantidadCadenas( )
     {
-        return -1;
+        return this.arbolCadenas.size();
     }
 
     /**
@@ -101,7 +139,11 @@ public class SandboxConjuntos
      */
     public void agregarCadena( String cadena )
     {
+    	if ( !( this.arbolCadenas.contains(cadena) ) ) {
 
+    		this.arbolCadenas.add(cadena);
+
+    	}
     }
 
     /**
@@ -110,7 +152,7 @@ public class SandboxConjuntos
      */
     public void eliminarCadena( String cadena )
     {
-
+    	this.arbolCadenas.remove(cadena);
     }
 
     /**
@@ -119,7 +161,27 @@ public class SandboxConjuntos
      */
     public void eliminarCadenaSinMayusculasOMinusculas( String cadena )
     {
+    	String cadenaLowerCase = cadena.toLowerCase();
 
+    	Iterator<String> arbolCadenasIterator = this.arbolCadenas.iterator();
+
+    	TreeSet<String> nuevoArbol = new TreeSet<String>();
+
+    	while ( arbolCadenasIterator.hasNext() ) {
+
+    		String next = arbolCadenasIterator.next();
+
+    		String nextLowerCase = next.toLowerCase();
+
+    		if ( !(nextLowerCase.equals(cadenaLowerCase)) ) {
+
+    			nuevoArbol.add(next);
+
+    		}
+
+    	}
+
+    	this.arbolCadenas = nuevoArbol;
     }
 
     /**
@@ -127,7 +189,7 @@ public class SandboxConjuntos
      */
     public void eliminarPrimera( )
     {
-
+    	this.arbolCadenas.remove( this.arbolCadenas.first() );
     }
 
     /**
@@ -138,7 +200,21 @@ public class SandboxConjuntos
      */
     public void reiniciarConjuntoCadenas( List<Object> objetos )
     {
+    	Iterator<Object> iteratorObjetos = objetos.iterator();
 
+    	TreeSet<String> nuevoArbol = new TreeSet<String>();
+
+    	while ( iteratorObjetos.hasNext() ) {
+
+    		Object next = iteratorObjetos.next();
+
+    		String stringNext = next.toString();
+
+    		nuevoArbol.add( stringNext );
+
+    	}
+
+    	this.arbolCadenas = nuevoArbol;
     }
 
     /**
@@ -148,6 +224,23 @@ public class SandboxConjuntos
      */
     public void volverMayusculas( )
     {
+    	
+    	Iterator<String> arbolCadenasIterator = this.arbolCadenas.iterator();
+
+    	TreeSet<String> nuevoArbol = new TreeSet<String>();
+
+    	while ( arbolCadenasIterator.hasNext( ) ) {
+
+    		String next = arbolCadenasIterator.next();
+
+    		next = next.toUpperCase();
+
+    		nuevoArbol.add(next);
+
+    	}
+
+    	this.arbolCadenas = nuevoArbol;
+
     }
 
     /**
@@ -155,7 +248,9 @@ public class SandboxConjuntos
      */
     public TreeSet<String> invertirCadenas( )
     {
-        return null;
+    	TreeSet<String> nuevoArbol = (TreeSet<String>) this.arbolCadenas.descendingSet();
+
+        return nuevoArbol;
     }
 
     /**
@@ -165,7 +260,17 @@ public class SandboxConjuntos
      */
     public boolean compararElementos( String[] otroArreglo )
     {
-        return false;
+    	for (int i = 0; i < otroArreglo.length; i++) {
+
+    		if ( !(this.arbolCadenas.contains( otroArreglo[i]) ) ) {
+
+    			return false;
+
+    		}
+
+    	}
+
+    	return true;
     }
 
 }
